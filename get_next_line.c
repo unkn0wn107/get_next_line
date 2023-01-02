@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:36:15 by agaley            #+#    #+#             */
-/*   Updated: 2022/12/04 23:04:22 by alex             ###   ########lyon.fr   */
+/*   Updated: 2022/12/17 15:57:06 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,17 @@
 // read definition
 ssize_t	read(int fd, void *buf, size_t count);
 
-// Get next position of c in buffer from start position
-size_t	ft_buffchr_nextpos(int c, char *buff, size_t start)
+
+/**
+ * Finds the next occurrence of a character in a buffer.
+ *
+ * @param c The character to find.
+ * @param buff The buffer to search.
+ * @param start The index to start searching from.
+ *
+ * @returns The index of the next occurrence of the character, or -1 if not found.
+ */
+static ssize_t	ft_buffchr_nextpos(int c, char *buff, ssize_t start)
 {
 	while (start < BUFFER_SIZE)
 	{
@@ -24,7 +33,7 @@ size_t	ft_buffchr_nextpos(int c, char *buff, size_t start)
 			return (start);
 		start++;
 	}
-	return (0);
+	return (-1);
 }
 
 // Append to line from BUFF[cur] upto len and reset cur
@@ -46,7 +55,7 @@ static char	*ft_get_line(int fd, char *buff)
 	char	*line;
 	ssize_t	read_b;
 	size_t	size;
-	size_t	i;
+	ssize_t	i;
 	size_t	j;
 
 	i = 0;
@@ -70,7 +79,7 @@ static char	*ft_get_line(int fd, char *buff)
 char	*get_next_line(int fd)
 {
 	static char	buff[BUFFER_SIZE];
-	static size_t	cur;
+	static ssize_t	cur;
 	char		*line;
 	size_t		size;
 	size_t		i;
@@ -80,8 +89,9 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (cur != 0)
 		line = (char *)malloc(sizeof(char) * (BUFFER_SIZE - cur));
-	while (read(fd, buff, BUFFER_SIZE) > 0)
+	while (ft_buffchr_nextpos('\n', buff, cur) == -1)
 	{
+		read(fd, buff, BUFFER_SIZE);
 		i = 0;
 		while (buff[i] != '\n')
 			i++;
