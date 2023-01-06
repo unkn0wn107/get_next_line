@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/04 23:36:10 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 00:46:29 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,26 @@
  *
  * @returns A pointer to s.
  **/
-static void	*ft_memset(void *s, int c, size_t n)
+static void	*ft_setchar(char *s, char c, size_t n)
 {
-	unsigned char	*s2;
-
-	s2 = (unsigned char *)s;
-	while (n--)
-		s2[n] = (unsigned char)c;
+	while (n > 0)
+		s[--n] = c;
 	return (s);
 }
 
-char	**ft_freemany(char **tab, size_t wn)
+/**
+ * Free all allocated strings in an array of strings and free the array.
+ *
+ * @param tab Array of strings
+ * @param strnum Maxium number of strings
+ *
+ * @return NULL
+ */
+char	*ft_freemany(char **tab, size_t strnum)
 {
-	while (wn--)
-		if (tab[wn])
-			free(tab[wn]);
+	while (strnum--)
+		if (tab[strnum])
+			free(tab[strnum]);
 	free(tab);
 	return (NULL);
 }
@@ -48,26 +53,26 @@ char	**ft_freemany(char **tab, size_t wn)
  *
  * @returns zeroed char at arr[strpos]
  **/
-char	**ft_alloczero_chararr(char **arr, int arrsize, int strpos, int strsize)
+char	**ft_alloczero_chararr(char **arr, int arrsize, int pos, int strsize)
 {
 	if (!arr)
-		arr = (char **)malloc((arrsize + 1) * sizeof(char *));
+		arr = (char **)malloc((arrsize) * sizeof(char *));
 	if (!arr)
 		return (NULL);
-	if (!arr[strpos])
-		arr[strpos] = (char *)malloc((strsize + 1) * sizeof(char));
-	if (!arr[strpos])
+	if (!arr[pos])
+		arr[pos] = (char *)malloc((strsize) * sizeof(char));
+	if (!arr[pos])
 	{
 		ft_freemany(arr, arrsize);
 		return (NULL);
 	}
-	ft_memset(arr[arrsize], '0', strsize + 1);
+	ft_setchar(arr[pos], '0', strsize);
 	return (arr);
 }
 
-size_t	ft_buffchr_nextpos(int c, char *buff)
+ssize_t	ft_buffchr_nextpos(int c, char *buff)
 {
-	int	i;
+	ssize_t	i;
 
 	i = 0;
 	while (i < BUFFER_SIZE)
@@ -75,11 +80,11 @@ size_t	ft_buffchr_nextpos(int c, char *buff)
 		if (buff[i++] == (char)c)
 			return (i);
 	}
-	return (0);
+	return (-1);
 }
 
 // A implémenter
-void	*ft_realloc(void *p, size_t size)
+char	*ft_realloc(char *p, size_t size)
 {
 	return (realloc(p, size));
 }
