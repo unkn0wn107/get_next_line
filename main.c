@@ -3,7 +3,15 @@
 
 int main(void)
 {
+	char	*line;
+
 	size_t fd = open("get_next_line.c", O_RDONLY);
 	printf("%d\n", fd);
-	printf("%s", get_next_line(fd));
+	line = get_next_line(fd);
+	while (line)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
+	}
 }

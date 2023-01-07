@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/06 00:46:29 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 02:22:59 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  *
  * @returns A pointer to s.
  **/
-static void	*ft_setchar(char *s, char c, size_t n)
+char	*ft_setchar(char *s, char c, size_t n)
 {
 	while (n > 0)
 		s[--n] = c;
@@ -60,22 +60,33 @@ char	**ft_alloczero_chararr(char **arr, int arrsize, int pos, int strsize)
 	if (!arr)
 		return (NULL);
 	if (!arr[pos])
-		arr[pos] = (char *)malloc((strsize) * sizeof(char));
-	if (!arr[pos])
 	{
-		ft_freemany(arr, arrsize);
-		return (NULL);
+		arr[pos] = (char *)malloc((strsize) * sizeof(char));
+		if (!arr[pos])
+		{
+			ft_freemany(arr, arrsize);
+			return (NULL);
+		}
+		ft_setchar(arr[pos], '0', strsize);
 	}
-	ft_setchar(arr[pos], '0', strsize);
 	return (arr);
 }
 
-ssize_t	ft_buffchr_nextpos(int c, char *buff)
+/**
+ * Find the position of a character in a buffer.
+ *
+ * @param c The character to find.
+ * @param buff The buffer to seek.
+ * @param size The buffer size.
+ *
+ * @return The position of c in buff or -1 if not found.
+ **/
+ssize_t	ft_buffchr_nextpos(int c, char *buff, ssize_t size)
 {
 	ssize_t	i;
 
 	i = 0;
-	while (i < BUFFER_SIZE)
+	while (i < size)
 	{
 		if (buff[i++] == (char)c)
 			return (i);
