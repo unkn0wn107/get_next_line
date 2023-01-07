@@ -25,10 +25,22 @@
 #  define MAX_OPEN 5
 # endif
 
+typedef struct s_buff
+{
+	int 		fd;
+	ssize_t 	cur;
+    char		str[BUFFER_SIZE];
+}t_buff;
+
+typedef struct s_line
+{
+	size_t	len;
+	char	*str;
+}t_line;
+
 char	*ft_setchar(char *s, char c, size_t n);
-char	*ft_freemany(char **tab, size_t wn);
-char	**ft_alloczero_chararr(char **arr, int size, int strpos, int len);
-ssize_t	ft_buffchr_nextpos(int c, char *buff, ssize_t size);
+t_buff	*ft_getbuf(t_buff *buff, ssize_t fd);
+ssize_t	ft_buffchr_nextpos(int c, t_buff buff, ssize_t size);
 char	*ft_realloc(char *p, size_t size);
 
 char	*get_next_line(int fd);

@@ -6,7 +6,7 @@ int main(void)
 {
 	char	*line;
 
-	size_t fd = open("get_next_line.c", O_RDONLY);
+	int fd = open("get_next_line.c", O_RDONLY);
 	printf("%d\n", fd);
 	line = get_next_line(fd);
 	while (line)

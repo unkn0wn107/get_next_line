@@ -28,67 +28,49 @@ char	*ft_setchar(char *s, char c, size_t n)
 	return (s);
 }
 
-/**
- * Free all allocated strings in an array of strings and free the array.
- *
- * @param tab Array of strings
- * @param strnum Maxium number of strings
- *
- * @return NULL
- */
-char	*ft_freemany(char **tab, size_t strnum)
+t_buff	*ft_getbuf(t_buff *buff, ssize_t fd)
 {
-	while (strnum--)
-		if (tab[strnum])
-			free(tab[strnum]);
-	free(tab);
-	return (NULL);
-}
+	t_buff	failed;
+	ssize_t	i;
 
-/**
- * Allocate a string at strpos index in an array if not occupied.
- *
- * @param strpos The index of the string to allocate.
- * @param size The length of the allocated strings.
- *
- * @returns zeroed char at arr[strpos]
- **/
-char	**ft_alloczero_chararr(char **arr, int arrsize, int pos, int strsize)
-{
-	if (!arr)
-		arr = (char **)malloc((arrsize) * sizeof(char *));
-	if (!arr)
-		return (NULL);
-	if (!arr[pos])
+	i = 0;
+	while (i < MAX_OPEN)
 	{
-		arr[pos] = (char *)malloc((strsize) * sizeof(char));
-		if (!arr[pos])
-		{
-			ft_freemany(arr, arrsize);
-			return (NULL);
-		}
-		ft_setchar(arr[pos], '0', strsize);
+		if (buff[i].fd == fd)
+			return (&(buff[i]));
+		i++;
 	}
-	return (arr);
+	i = 0;
+	while (i < MAX_OPEN)
+	{
+		if (buff[i].fd == -1)
+		{
+			buff[i].fd = fd;
+			buff[i].cur = 0;
+			return (&(buff[i]));
+		}
+		i++;
+	}
+	return (NULL);
 }
 
 /**
  * Find the position of a character in a buffer.
  *
  * @param c The character to find.
- * @param buff The buffer to seek.
+ * @param buf The buffer to seek.
  * @param size The buffer size.
  *
  * @return The position of c in buff or -1 if not found.
  **/
-ssize_t	ft_buffchr_nextpos(int c, char *buff, ssize_t size)
+ssize_t	ft_buffchr_nextpos(int c, t_buff buf, ssize_t size)
 {
 	ssize_t	i;
 
 	i = 0;
 	while (i < size)
 	{
-		if (buff[i++] == (char)c)
+		if (buf.str[i++] == (char)c)
 			return (i);
 	}
 	return (-1);
