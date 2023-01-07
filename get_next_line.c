@@ -15,20 +15,20 @@
 static ssize_t	ft_bufflen(t_buff buf, ssize_t len)
 {
 	if (len == -1)
-		len = ft_buffchr_nextpos('\n', buf, BUFFER_SIZE);
+		len = ft_buffchr_nextpos('\n', buf, BUFFER_SIZE) + 1;
 	if (len == -1)
-		len = ft_buffchr_nextpos('\0', buf, BUFFER_SIZE);
+		len = ft_buffchr_nextpos('\0', buf, BUFFER_SIZE) + 1;
 	if (len == -1)
 		len = 0;
 	return (len);
 }
 
-static t_line	*ft_append_line(t_line *line, t_buff *buf, ssize_t len)
+static t_line	ft_append_line(t_line *line, t_buff *buf, ssize_t len)
 {
 	len = ft_bufflen(*buf, len);
 	line->str = ft_realloc(line->str, (line->len + len) * sizeof(char));
 	if (!line->str)
-		return (line);
+		return (*line);
 	while (buf->cur < len)
 	{
 		line->str[line->len + buf->cur] = buf->str[buf->cur];
@@ -36,34 +36,46 @@ static t_line	*ft_append_line(t_line *line, t_buff *buf, ssize_t len)
 	}
 	if (len == BUFFER_SIZE)
 		buf->cur = 0;
-	return (line);
+	line->len += len;
+	return (*line);
 }
 
 static char	*ft_slinefrombuff(t_buff *buf)
 {
 	ssize_t	len;
+	ssize_t i;
 	char	*line;
 
 	len = ft_buffchr_nextpos('\n', *buf, BUFFER_SIZE);
 	if (len == -1)
-		len = ft_buffchr_nextpos('\0', *buf, BUFFER_SIZE);
+		len = ft_buffchr_nextpos('\0', *buf, BUFFER_SIZE) + 1;
+	if (len == -1)
+		len = BUFFER_SIZE - buf->cur;
 	line = malloc(len * sizeof(char));
 	if (!line)
 		return (NULL);
+	i = 0;
+	while (buf->cur < len)
+	{
+		line[i++] = buf->str[buf->cur];
+		i++;
+	}
 	if (len < BUFFER_SIZE)
-		buf->cur = len;
+		buf->cur += len;
+	if (buf->cur >= BUFFER_SIZE)
+		buf->cur = 0;
 	return (line);
 }
 
 char	*get_next_line(int fd)
 {
 	static t_buff	buff[MAX_OPEN];
-	t_line			*line;
+	t_line			line;
 	ssize_t			numread;
 	ssize_t			len;
 
-	line->len = 0;
-	line->str = NULL;
+	line.len = 0;
+	line.str = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || MAX_OPEN <= 0 || BUFFER_SIZE > SSIZE_MAX
 		|| MAX_OPEN > SSIZE_MAX || !ft_getbuf(buff, fd))
 		return (NULL);
@@ -72,16 +84,16 @@ char	*get_next_line(int fd)
 	while (ft_buffchr_nextpos('\n', *ft_getbuf(buff, fd), BUFFER_SIZE) == -1)
 	{
 		len = ft_bufflen(*ft_getbuf(buff, fd), -1);
-		line = ft_append_line(line, ft_getbuf(buff, fd), len);
-		if (!line->str)
+		line = ft_append_line(&line, ft_getbuf(buff, fd), len);
+		if (!line.str)
 			return (NULL);
 		numread = read(fd, ft_getbuf(buff, fd)->str, BUFFER_SIZE);
 		if (numread <= 0)
 		{
 			ft_getbuf(buff, fd)->fd = -1;
-			return (line->str);
+			return (line.str);
 		}
-		line = ft_append_line(line, ft_getbuf(buff, fd), -1);
+		line = ft_append_line(&line, ft_getbuf(buff, fd), -1);
 	}
-	return (line->str);
+	return (line.str);
 }

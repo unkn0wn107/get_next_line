@@ -30,20 +30,21 @@ char	*ft_setchar(char *s, char c, size_t n)
 
 t_buff	*ft_getbuf(t_buff *buff, ssize_t fd)
 {
-	t_buff	failed;
 	ssize_t	i;
 
-	i = 0;
-	while (i < MAX_OPEN)
+	if (fd == 0)
+		return (&(buff[0]));
+	i = 1;
+	while (i - 1 < MAX_OPEN)
 	{
 		if (buff[i].fd == fd)
 			return (&(buff[i]));
 		i++;
 	}
-	i = 0;
-	while (i < MAX_OPEN)
+	i = 1;
+	while (i - 1 < MAX_OPEN)
 	{
-		if (buff[i].fd == -1)
+		if (buff[i].fd == 0)
 		{
 			buff[i].fd = fd;
 			buff[i].cur = 0;
@@ -67,11 +68,12 @@ ssize_t	ft_buffchr_nextpos(int c, t_buff buf, ssize_t size)
 {
 	ssize_t	i;
 
-	i = 0;
+	i = buf.cur;
 	while (i < size)
 	{
-		if (buf.str[i++] == (char)c)
+		if (buf.str[i] == (char)c)
 			return (i);
+		i++;
 	}
 	return (-1);
 }
