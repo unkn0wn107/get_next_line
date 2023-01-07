@@ -6,12 +6,11 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:36:15 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/07 02:23:44 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 03:02:36 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
 
 static void	ft_slide_buffer_to_pos(char *buf, ssize_t pos, ssize_t size)
 {
@@ -29,8 +28,6 @@ static void	ft_slide_buffer_to_pos(char *buf, ssize_t pos, ssize_t size)
 
 static ssize_t	ft_bufflen(char *buf, ssize_t len, char *line)
 {
-	if (line && len == -1)
-		len = BUFFER_SIZE;
 	if (len == -1)
 		len = ft_buffchr_nextpos('\n', buf, BUFFER_SIZE);
 	if (len == -1)
@@ -100,9 +97,7 @@ char	*get_next_line(int fd)
 		return (ft_append_line(line, buff[fd], -1));
 	while (ft_buffchr_nextpos('\n', buff[fd], BUFFER_SIZE) == -1)
 	{
-		len = ft_buffchr_nextpos('\0', buff[fd], BUFFER_SIZE);
-		if (len == -1 && line)
-			len = BUFFER_SIZE;
+		len = ft_bufflen(buff[fd], -1, line);
 		line = ft_append_line(line, buff[fd], len);
 		if (!line)
 			return (NULL);
