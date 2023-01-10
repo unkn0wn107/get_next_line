@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="a6d65817-30bd-40a0-9c33-e5dd20eb13e6" name="clang - rm" defaultType="TOOL">
+      <configuration id="4eab34d3-0994-44b0-bc5a-a3c162217a2f" name="clang - rm">
+        <build type="TOOL">
+          <tool actionId="Tool_External Tools_clang" />
+        </build>
+        <clean type="TOOL">
+          <tool actionId="Tool_External Tools_rm main" />
+        </clean>
+      </configuration>
+    </target>
+  </component>
+</project>

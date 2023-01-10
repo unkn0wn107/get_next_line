@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.ejs": "html",
+    "*.gs": "javascript",
+    "*.liquid": "liquid",
+    "*.md": "markdown",
+    "limits.h": "c",
+    "unistd.h": "c"
+  }
+}
