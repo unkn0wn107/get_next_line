@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:35:03 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/07 02:23:13 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/08 21:39:46 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 10000
 # endif
 
 # ifndef MAX_OPEN
-#  define MAX_OPEN 5
+#  define MAX_OPEN 1
 # endif
 
 typedef struct s_buff
 {
-	int 		fd;
-	ssize_t 	cur;
-    char		str[BUFFER_SIZE];
+	int		fd;
+	ssize_t	cur;
+	char	str[BUFFER_SIZE];
 }t_buff;
 
 typedef struct s_line

@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/07 02:22:59 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/08 17:57:11 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,24 @@ char	*ft_setchar(char *s, char c, size_t n)
 	return (s);
 }
 
+// Vérifier pour fd = 0 si appelé en premier ou ensuite
 t_buff	*ft_getbuf(t_buff *buff, ssize_t fd)
 {
 	ssize_t	i;
 
-	if (fd == 0)
-		return (&(buff[0]));
-	i = 1;
-	while (i - 1 < MAX_OPEN)
+	i = 0;
+	while (i < MAX_OPEN)
 	{
 		if (buff[i].fd == fd)
 			return (&(buff[i]));
 		i++;
 	}
-	i = 1;
-	while (i - 1 < MAX_OPEN)
+	i = 0;
+	while (i < MAX_OPEN)
 	{
-		if (buff[i].fd == 0)
+		if (buff[i].fd == 0 && buff[i].cur == 0 && !buff[i].str[0])
 		{
 			buff[i].fd = fd;
-			buff[i].cur = 0;
 			return (&(buff[i]));
 		}
 		i++;
