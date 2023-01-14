@@ -64,7 +64,7 @@ void	ft_cleanbuf(t_buff *buff, ssize_t fd)
 	buf->nr = 0;
 	i = 0;
 	while (i < BUFFER_SIZE)
-        buf->str[i++] = '\0';
+		buf->str[i++] = '\0';
 }
 
 /**
