@@ -53,25 +53,37 @@ t_buff	*ft_getbuf(t_buff *buff, ssize_t fd)
 	return (NULL);
 }
 
+void	ft_cleanbuf(t_buff *buff, ssize_t fd)
+{
+	t_buff	*buf;
+	ssize_t	i;
+
+	buf = ft_getbuf(buff, fd);
+	buf->cur = 0;
+	buf->fd = 0;
+	buf->nr = 0;
+	i = 0;
+	while (i < BUFFER_SIZE)
+        buf->str[i++] = '\0';
+}
+
 /**
- * Find the position of a character in a buffer.
+ * Find the position of a character in a char buffer from start till size.
  *
  * @param c The character to find.
  * @param buf The buffer to seek.
+ * @param start The buffer size.
  * @param size The buffer size.
  *
  * @return The position of c in buff or -1 if not found.
  **/
-ssize_t	ft_buffchr_nextpos(int c, t_buff buf, ssize_t size)
+ssize_t	ft_buffchr_nextpos(int c, char *buf, ssize_t start, ssize_t size)
 {
-	ssize_t	i;
-
-	i = buf.cur;
-	while (i < size)
+	while (start < size)
 	{
-		if (buf.str[i] == (char)c)
-			return (i);
-		i++;
+		if (buf[start] == (char)c)
+			return (start);
+		start++;
 	}
 	return (-1);
 }
@@ -79,5 +91,7 @@ ssize_t	ft_buffchr_nextpos(int c, t_buff buf, ssize_t size)
 // A implémenter
 char	*ft_realloc(char *p, size_t size)
 {
+	if (!p)
+		p = malloc(sizeof(char));
 	return (realloc(p, size));
 }

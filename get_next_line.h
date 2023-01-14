@@ -18,7 +18,7 @@
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
+#  define BUFFER_SIZE 100
 # endif
 
 # ifndef MAX_OPEN
@@ -29,18 +29,20 @@ typedef struct s_buff
 {
 	int		fd;
 	ssize_t	cur;
+	ssize_t	nr;
 	char	str[BUFFER_SIZE];
 }t_buff;
 
 typedef struct s_line
 {
-	size_t	len;
+	size_t	cur;
 	char	*str;
 }t_line;
 
 char	*ft_setchar(char *s, char c, size_t n);
 t_buff	*ft_getbuf(t_buff *buff, ssize_t fd);
-ssize_t	ft_buffchr_nextpos(int c, t_buff buff, ssize_t size);
+void	ft_cleanbuf(t_buff *buff, ssize_t fd);
+ssize_t	ft_buffchr_nextpos(int c, char *buf, ssize_t start, ssize_t size);
 char	*ft_realloc(char *p, size_t size);
 
 char	*get_next_line(int fd);
