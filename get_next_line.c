@@ -30,14 +30,17 @@ static void	ft_append_line(t_line *line, t_buff *buf, ssize_t len)
 	len = ft_bufflen(*buf, len);
 	if (buf->cur == buf->nr || buf->nr == 0)
 		return ;
-	size = line->cur + len - buf->cur;
+	size = line->cur + len - buf->cur + 1;
 	line->str = ft_realloc(line->str, size * sizeof(char));
 	if (!line->str)
 		return ;
 	while (buf->cur < buf->nr && buf->str[buf->cur] != '\n')
-		line->str[line->cur++] = (char)buf->str[buf->cur++];
+		line->str[line->cur++] = buf->str[buf->cur++];
 	if (buf->str[buf->cur] == '\n')
-		line->str[line->cur++] = (char)buf->str[buf->cur++];
+    {
+        line->str[line->cur++] = buf->str[buf->cur++];
+        line->str[line->cur++] = '\0';
+    }
 }
 
 char	*get_next_line(int fd)
