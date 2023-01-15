@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static ssize_t	ft_bufflen(t_buff buf, ssize_t len)
 {
@@ -45,15 +45,17 @@ static void	ft_append_line(t_line *line, t_buff *buf, ssize_t len)
 
 char	*get_next_line(int fd)
 {
-	static t_buff	buff;
+	static t_buff	buff[MAX_OPEN];
 	t_buff			*bufptr;
 	t_line			line;
 
 	line.cur = 0;
 	line.str = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > __SIZE_MAX__ / 2)
+	if (fd < 0 || BUFFER_SIZE <= 0 || MAX_OPEN <= 0
+		|| BUFFER_SIZE > __SIZE_MAX__ / 2 || MAX_OPEN > __SIZE_MAX__ / 2
+		|| !ft_getbuf(buff, fd))
 		return (NULL);
-	bufptr = &buff;
+	bufptr = ft_getbuf(buff, fd);
 	while (ft_buffchr_nextpos('\n', line.str, 0, line.cur) == -1
 		|| ft_buffchr_nextpos('\n', bufptr->str, bufptr->cur, bufptr->nr) == -1)
 	{
@@ -66,7 +68,7 @@ char	*get_next_line(int fd)
 		bufptr->cur = 0;
 		if (bufptr->nr <= 0)
 		{
-			ft_cleanbuf(&buff);
+			ft_cleanbuf(buff, fd);
 			return (line.str);
 		}
 	}

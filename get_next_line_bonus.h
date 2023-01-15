@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -41,7 +41,7 @@ typedef struct s_line
 
 char	*ft_setchar(char *s, char c, size_t n);
 t_buff	*ft_getbuf(t_buff *buff, ssize_t fd);
-void	ft_cleanbuf(t_buff *buff);
+void	ft_cleanbuf(t_buff *buff, ssize_t fd);
 ssize_t	ft_buffchr_nextpos(int c, char *buf, ssize_t start, ssize_t size);
 char	*ft_realloc(char *p, size_t size);
 

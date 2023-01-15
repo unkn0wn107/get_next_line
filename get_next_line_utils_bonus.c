@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 /**
  * Sets the first n bytes of the memory pointed to by s to the value of c.
@@ -28,16 +28,43 @@ char	*ft_setchar(char *s, char c, size_t n)
 	return (s);
 }
 
-void	ft_cleanbuf(t_buff *buff)
+// Vérifier pour fd = 0 si appelé en premier ou ensuite
+t_buff	*ft_getbuf(t_buff *buff, ssize_t fd)
 {
 	ssize_t	i;
 
-    buff->cur = 0;
-	buff->fd = 0;
-	buff->nr = 0;
+	i = 0;
+	while (i < MAX_OPEN)
+	{
+		if (buff[i].fd == fd)
+			return (&(buff[i]));
+		i++;
+	}
+	i = 0;
+	while (i < MAX_OPEN)
+	{
+		if (buff[i].fd == 0 && buff[i].cur == 0 && !buff[i].str[0])
+		{
+			buff[i].fd = fd;
+			return (&(buff[i]));
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+void	ft_cleanbuf(t_buff *buff, ssize_t fd)
+{
+	t_buff	*buf;
+	ssize_t	i;
+
+	buf = ft_getbuf(buff, fd);
+	buf->cur = 0;
+	buf->fd = 0;
+	buf->nr = 0;
 	i = 0;
 	while (i < BUFFER_SIZE)
-		buff->str[i++] = '\0';
+		buf->str[i++] = '\0';
 }
 
 /**
