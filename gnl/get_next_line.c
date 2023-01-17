@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:36:15 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/10 23:29:54 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 21:54:45 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static ssize_t	ft_bufflen(t_buff buf, ssize_t len)
 {
 	if (len == -1)
-		len = ft_buffchr_nextpos('\n', buf.str, buf.cur, buf.nr) + 1;
+		len = ft_buffchr_nextpos('\n', buf.str, buf.cur, buf.nr - 1) + 1;
 	if (len == 0 && buf.cur < buf.nr)
 		len = buf.nr;
 	if (len == -1)
@@ -30,22 +30,32 @@ static void	ft_append_line(t_line *line, t_buff *buf, ssize_t len)
 	len = ft_bufflen(*buf, len);
 	if (buf->cur == buf->nr || buf->nr == 0)
 		return ;
-	size = line->cur + len - buf->cur + 1;
+	size = line->cur + len - buf->cur;
 	line->str = ft_realloc(line->str, size * sizeof(char));
 	if (!line->str)
 		return ;
-	while (buf->cur < buf->nr && buf->str[buf->cur] != '\n')
+	while (buf->cur < buf->nr && buf->str[buf->cur] != '\n'
+		&& buf->str[buf->cur])
 		line->str[line->cur++] = buf->str[buf->cur++];
-	if (buf->str[buf->cur] == '\n' && buf->cur != buf->nr - 1 && buf->nr < BUFFER_SIZE)
-    {
-        line->str[line->cur++] = buf->str[buf->cur++];
-        line->str[line->cur++] = '\0';
-    }
+	// if (buf->str[buf->cur] == '\n' && buf->cur != buf->nr - 1 && line->cur < size)
+	if (buf->str[buf->cur] == '\n' && line->cur < size)
+		line->str[line->cur++] = buf->str[buf->cur++];
+	if (line->cur < size)
+		// if (buf->nr < BUFFER_SIZE && line->cur < size)
+		line->str[line->cur++] = '\0';
+	// if (buf->str[buf->cur] == '\n' && line->cur < size) {
+	// 	if (buf->cur == buf->nr - 1 && buf->nr <= BUFFER_SIZE)
+	// 	    line->str[line->cur++] = buf->str[buf->cur++];
+	// 	else
+	// 		line->str[line->cur++] = '\0';
+	// }
+	// if (line->cur < size)
+	// 	line->str[line->cur++] = '\0';
 }
 
 char	*get_next_line(int fd)
 {
-	static t_buff	buff;
+	static t_buff	buff; // buff = {0, 0, 0, NULL};
 	t_buff			*bufptr;
 	t_line			line;
 

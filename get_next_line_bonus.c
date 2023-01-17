@@ -36,7 +36,7 @@ static void	ft_append_line(t_line *line, t_buff *buf, ssize_t len)
 		return ;
 	while (buf->cur < buf->nr && buf->str[buf->cur] != '\n')
 		line->str[line->cur++] = buf->str[buf->cur++];
-	if (buf->str[buf->cur] == '\n')
+    if (buf->str[buf->cur] == '\n' && buf->cur != buf->nr - 1 && buf->nr < BUFFER_SIZE)
     {
         line->str[line->cur++] = buf->str[buf->cur++];
         line->str[line->cur++] = '\0';
