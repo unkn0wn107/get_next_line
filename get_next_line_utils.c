@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/08 17:57:11 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/18 19:37:51 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_cleanbuf(t_buff *buff)
 {
 	ssize_t	i;
 
-    buff->cur = 0;
+	buff->cur = 0;
 	buff->fd = 0;
 	buff->nr = 0;
 	i = 0;
@@ -64,7 +64,22 @@ ssize_t	ft_buffchr_nextpos(int c, char *buf, ssize_t start, ssize_t size)
 // A implémenter
 char	*ft_realloc(char *p, size_t size)
 {
+	size_t	i;
+	char	*str;
+
+	str = malloc(size * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < size)
+		str[i++] = '\0';
 	if (!p)
-		p = malloc(sizeof(char));
-	return (realloc(p, size));
+		return (str);
+	i = 0;
+	while (p[i])
+	{
+		str[i] = p[i];
+	}
+	free(p);
+	return (str);
 }
