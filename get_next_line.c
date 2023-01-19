@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:36:15 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/18 19:47:51 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/19 00:41:24 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,13 @@ static void	ft_append_line(t_line *line, t_buff *buf, ssize_t len)
 		return ;
 	while (buf->cur < buf->nr && buf->str[buf->cur] != '\n')
 		line->str[line->cur++] = buf->str[buf->cur++];
-	if (line->cur < size && buf->str[buf->cur++] == '\n')
+	if (line->cur < size && buf->str[buf->cur] == '\n')
+	{
 		line->str[line->cur++] = '\n';
+		buf->cur++;
+	}
+	if (line->cur < size && buf->nr < BUFFER_SIZE)
+		line->str[line->cur++] = '\0';
 }
 	// if (line->cur < size)
 	// 	line->str[line->cur++] = '\0';
@@ -66,11 +71,12 @@ char	*get_next_line(int fd)
 		ft_append_line(&line, bufptr, -1);
 		if (line.cur != 0 && !line.str)
 			return (NULL);
-		if (line.cur > 0 && bufptr->cur != bufptr->nr)
+		if (line.cur > 0 && (ft_buffchr_nextpos('\n', line.str, 0, line.cur) >= 0
+			|| bufptr->nr < BUFFER_SIZE))
 			return (line.str);
 		bufptr->nr = read(fd, bufptr->str, BUFFER_SIZE);
 		bufptr->cur = 0;
-		if (bufptr->nr <= 0)
+		if (bufptr->nr <= 0) // en cas d'erreur de lecture ?
 		{
 			ft_cleanbuf(&buff);
 			// line.str = ft_realloc(line.str, (line.cur + 1) * sizeof(char));
