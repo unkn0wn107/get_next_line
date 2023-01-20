@@ -2,18 +2,16 @@
   "tasks": [
     {
       "type": "cppbuild",
-      "label": "clangbuild",
-      "command": "/usr/bin/clang",
+      "label": "build",
+      "command": "/usr/bin/gcc",
       "args": [
-        "-fcolor-diagnostics",
-        "-fansi-escape-codes",
         "-Wall",
         "-Werror",
         "-Wextra",
         "-g",
-        "*.c",
+        "${workspaceFolder}/*.c",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${workspaceFolder}/main"
       ],
       "options": {
         "cwd": "${fileDirname}"
