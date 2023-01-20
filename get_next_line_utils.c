@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/18 19:37:51 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/20 22:54:32 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_setchar(char *s, char c, size_t n)
 	return (s);
 }
 
-void	ft_cleanbuf(t_buff *buff)
+char	*ft_cleanbuf(t_buff *buff, t_line *line)
 {
 	ssize_t	i;
 
@@ -38,6 +38,7 @@ void	ft_cleanbuf(t_buff *buff)
 	i = 0;
 	while (i < BUFFER_SIZE)
 		buff->str[i++] = '\0';
+	return (line->str);
 }
 
 /**
@@ -79,6 +80,7 @@ char	*ft_realloc(char *p, size_t size)
 	while (p[i])
 	{
 		str[i] = p[i];
+		i++;
 	}
 	free(p);
 	return (str);
