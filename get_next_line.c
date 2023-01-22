@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:36:15 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/22 23:04:57 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/22 23:31:07 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ char	*get_next_line(int fd)
 		ft_append_line(&line, &buff, -1);
 		if (line.cur != 0 && !line.str)
 			return (NULL);
-		if (line.cur > 0 && (buff.nr < BUFFER_SIZE)
-			|| ft_buffchr_nextpos('\n', line.str, 0, line.cur) >= 0)
+		if (line.cur > 0 && ((buff.nr < BUFFER_SIZE)
+				|| ft_buffchr_nextpos('\n', line.str, 0, line.cur) >= 0))
 			return (line.str);
 		buff.nr = read(fd, buff.str, BUFFER_SIZE);
 		buff.cur = 0;
