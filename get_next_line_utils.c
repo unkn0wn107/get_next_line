@@ -6,28 +6,20 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/20 22:54:32 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/01/22 23:13:34 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /**
- * Sets the first n bytes of the memory pointed to by s to the value of c.
+ * Reinitialize and clean the buffer and return line string.
  *
- * @param s The memory area to set.
- * @param c The value to set the memory area to.
- * @param n The number of bytes to set.
+ * @param buff The buffer to clean up.
+ * @param line To return line->str.
  *
- * @returns A pointer to s.
+ * @returns line->str, which could be NULL.
  **/
-char	*ft_setchar(char *s, char c, size_t n)
-{
-	while (n > 0)
-		s[--n] = c;
-	return (s);
-}
-
 char	*ft_cleanbuf(t_buff *buff, t_line *line)
 {
 	ssize_t	i;
@@ -62,7 +54,14 @@ ssize_t	ft_buffchr_nextpos(int c, char *buf, ssize_t start, ssize_t size)
 	return (-1);
 }
 
-// A implémenter
+/**
+ * Changes the size of the string pointed to by p to size bytes.
+ * 
+ * @param p The pointer to reallocate.
+ * @param size The new size of the string.
+ * 
+ * @return The pointer to the reallocated string, filled with '\0'.
+ **/
 char	*ft_realloc(char *p, size_t size)
 {
 	size_t	i;
