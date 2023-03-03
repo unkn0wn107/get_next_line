@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:36:15 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/02 20:36:32 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/04 00:17:41 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ char	*get_next_line(int fd)
 	static t_buff	buff;
 	t_line			line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0
+		|| BUFFER_SIZE > __SIZE_MAX__ / 2 - sizeof(t_buffinterface))
+		return (NULL);
 	line.cur = 0;
 	line.str = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > SSIZE_MAX)
-		return (NULL);
 	while (ft_buffeol_nextpos(line.str, 0, line.cur + 1) == -1)
 	{
 		ft_append_line(&line, &buff, -1);

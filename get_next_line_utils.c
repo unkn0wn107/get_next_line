@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/02 20:37:43 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/04 00:40:19 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	*ft_cleanbuf(t_buff *buff, t_line *line)
  **/
 ssize_t	ft_buffeol_nextpos(char *buf, ssize_t start, ssize_t size)
 {
+	if (!buf)
+		return (-1);
 	while (start < size)
 	{
 		if (buf[start] == '\n')
