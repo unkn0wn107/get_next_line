@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:35:03 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/23 00:10:25 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/02 20:36:53 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ typedef struct s_buff
 
 typedef struct s_line
 {
-	size_t	cur;
+	ssize_t	cur;
 	char	*str;
 }t_line;
 
 t_buff	*ft_getbuf(t_buff *buff, ssize_t fd);
 char	*ft_cleanbuf(t_buff *buf, t_line *line);
-ssize_t	ft_buffchr_nextpos(int c, char *buf, ssize_t start, ssize_t size);
+ssize_t	ft_buffeol_nextpos(char *buf, ssize_t start, ssize_t size);
 char	*ft_realloc(char *p, size_t size);
 
 char	*get_next_line(int fd);

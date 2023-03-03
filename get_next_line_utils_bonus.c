@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/01/23 00:06:32 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/02 20:37:52 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,19 @@ char	*ft_cleanbuf(t_buff *buf, t_line *line)
 }
 
 /**
- * Find the position of a character in a char buffer from start till size.
+ * Find the position of an EOL from the start of a size-long buffer.
  *
- * @param c The character to find.
  * @param buf The buffer to seek.
  * @param start The buffer size.
  * @param size The buffer size.
  *
- * @return The position of c in buff or -1 if not found.
+ * @return The position of an EOL in buff or -1 if not found.
  **/
-ssize_t	ft_buffchr_nextpos(int c, char *buf, ssize_t start, ssize_t size)
+ssize_t	ft_buffeol_nextpos(char *buf, ssize_t start, ssize_t size)
 {
 	while (start < size)
 	{
-		if (buf[start] == (char)c)
+		if (buf[start] == '\n')
 			return (start);
 		start++;
 	}
