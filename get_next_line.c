@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:36:15 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/04 00:17:41 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/04 00:54:54 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*get_next_line(int fd)
 	t_line			line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0
-		|| BUFFER_SIZE > __SIZE_MAX__ / 2 - sizeof(t_buffinterface))
+		|| BUFFER_SIZE > __SIZE_MAX__ / 2 - sizeof(t_buff))
 		return (NULL);
 	line.cur = 0;
 	line.str = NULL;
