@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:35:03 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/04 01:00:36 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/04 01:21:12 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 10
 # endif
 
 # ifndef MAX_OPEN
