@@ -14,12 +14,14 @@ int main(void)
 	free(line);
 	line = get_next_line(fd);
 	printf("%lu|%s", strlen(line), line);
-	free(line);
+	/*free(line);
 		char *temp;
 		do {
 			temp = get_next_line(fd);
 			free(temp);
-		} while (temp != NULL);
+		} while (temp != NULL);*/
+	line = get_next_line(fd);
+	printf("%s", line);
 	close(fd);
 	fd = open(name, O_RDONLY);
 	line = get_next_line(fd);
