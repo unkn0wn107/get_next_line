@@ -21,10 +21,6 @@
 #  define BUFFER_SIZE 10
 # endif
 
-# ifndef MAX_OPEN
-#  define MAX_OPEN 1
-# endif
-
 typedef struct s_buff
 {
 	int		fd;
