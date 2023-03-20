@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:35:03 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/19 19:30:07 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 00:54:01 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # endif
 
 # ifndef MAX_OPEN
-#  define MAX_OPEN 1024
+#  define MAX_OPEN 1000
 # endif
 
 typedef struct s_buff
