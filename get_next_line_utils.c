@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/19 19:27:36 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 00:28:30 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*ft_cleanbuf(t_buff *buff, t_line *line)
 		line->str = NULL;
 	}
 	buff->cur = 0;
-	buff->fd = 0;
 	buff->nr = 0;
 	i = 0;
 	while (i < BUFFER_SIZE)

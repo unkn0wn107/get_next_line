@@ -6,7 +6,7 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 02:35:03 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/04 01:00:29 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 00:28:54 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 
 typedef struct s_buff
 {
-	int		fd;
 	ssize_t	cur;
 	ssize_t	nr;
 	char	str[BUFFER_SIZE];

@@ -6,13 +6,21 @@
 /*   By: agaley <agaley@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 22:26:27 by agaley            #+#    #+#             */
-/*   Updated: 2023/03/19 20:24:07 by agaley           ###   ########lyon.fr   */
+/*   Updated: 2023/03/21 01:05:46 by agaley           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-// Vérifier pour fd = 0 si appelé en premier ou ensuite
+/**
+ * Get the buffer corresponding to the file descriptor in an array of buffers.
+ * If not found, create a new buffer for this fd.
+ *
+ * @param buff The buffers array to seek.
+ * @param fd The file descriptor of the buffer to seek.
+ *
+ * @returns t_buff buffer corresponding to the fd, or NULL if MAX_OPEN exceeded.
+ **/
 t_buff	*ft_getbuf(t_buff *buff, ssize_t fd)
 {
 	ssize_t	i;
